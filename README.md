@@ -1,29 +1,44 @@
-# bizico-react-promise
+# @bizico/react-promise
 
 > wrap your component to work with side effects easier
 
-[![NPM](https://img.shields.io/npm/v/bizico-react-promise.svg)](https://www.npmjs.com/package/bizico-react-promise) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/@bizico/react-promise.svg)](https://www.npmjs.com/package/@bizico/react-promise) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
 ```bash
-npm install --save bizico-react-promise
+npm install --save @bizico/react-promise
 ```
 
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
+import React from 'react';
+import { Query } from '@bizico/react-promise';
+import Button from '../components/Button';
+import Loader from '../components/Loader';
+import Error from '../components/Error';
 
-import MyComponent from 'bizico-react-promise'
+const promises = () => new Promise((resolve) => {
+  setTimeout(() => resolve('Loaded Data'), 2000);
+});
 
-class Example extends Component {
-  render () {
-    return (
-      <MyComponent />
-    )
-  }
-}
+const Example = () => (
+  <Query
+    name="data"
+    defaultData="Loading ..."
+    promises={promises}
+    loading={(props) => <Loader {...props} />}
+    error={(props) => <Error {...props} />}
+  >
+    {({ data: { data, refetch } }) => (
+      <div>
+        <div>{data}</div>
+        <Button onClick={refetch}>Refresh</Button>
+      </div>
+    )}
+  </Query>
+)
 ```
 
 ## License

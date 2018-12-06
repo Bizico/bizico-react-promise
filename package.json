@@ -1,6 +1,6 @@
 {
-  "name": "bizico-react-promise",
-  "version": "0.0.1",
+  "name": "@bizico/react-promise",
+  "version": "0.0.2",
   "description": "Wrap your component to work with side effects easier",
   "author": "Vitalii Baitaliuk <vbait@bizico.com>",
   "license": "MIT",
@@ -36,6 +36,8 @@
     "babel-preset-stage-0": "^6.24.1",
     "cross-env": "^5.1.4",
     "eslint": "^5.0.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-config-standard": "^11.0.0",
     "eslint-config-standard-react": "^6.0.0",
     "eslint-plugin-import": "^2.13.0",
@@ -57,9 +59,5 @@
   },
   "files": [
     "dist"
-  ],
-  "dependencies": {
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2"
-  }
+  ]
 }
