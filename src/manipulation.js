@@ -6,6 +6,7 @@ class ManipulationWrapper extends React.PureComponent {
   constructor(props) {
     super(props);
     const { promises = {} } = props;
+    this.isMount = false;
     this.state = {};
     Object.keys(promises).forEach((promiseName) => {
       const promise = promises[promiseName];
@@ -18,18 +19,30 @@ class ManipulationWrapper extends React.PureComponent {
     });
   }
 
+  componentDidMount() {
+    this.isMount = true;
+  }
+
+  componentWillUnmount() {
+    this.isMount = false;
+  }
+
   manipulate = (name, promise) => (...args) => {
     const { [name]: item } = this.state;
     this.setState({ [name]: { ...item, loading: true } });
     return Promise.resolve(promise(this.props, ...args))
       .then((data) => {
-        this.setState({
-          [name]: { ...item, loading: false, error: null, data },
-        });
+        if (this.isMount) {
+          this.setState({
+            [name]: { ...item, loading: false, error: null, data },
+          });
+        }
         return data;
       })
       .catch((error) => {
-        this.setState({ [name]: { ...item, loading: false, error } });
+        if (this.isMount) {
+          this.setState({ [name]: { ...item, loading: false, error } });
+        }
         return Promise.reject(error);
       });
   };

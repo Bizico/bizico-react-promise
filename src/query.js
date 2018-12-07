@@ -10,9 +10,11 @@ class PromiseWrapper extends React.PureComponent {
     this.skip = skip(props);
     this.state = { loading: !this.skip, error: null, data: defaultData };
     this.loaded = false;
+    this.isMount = false;
   }
 
   componentDidMount() {
+    this.isMount = true;
     if (!this.skip) {
       this.query();
       this.loaded = true;
@@ -26,12 +28,16 @@ class PromiseWrapper extends React.PureComponent {
       this.loaded = true;
       this.refetch();
     } else if (
-      !this.skip &&
-      variables &&
-      shallowDiffers(variables(prevProps), variables(this.props))
+      !this.skip
+      && variables
+      && shallowDiffers(variables(prevProps), variables(this.props))
     ) {
       this.refetch();
     }
+  }
+
+  componentWillUnmount() {
+    this.isMount = false;
   }
 
   query = (...args) => {
@@ -43,11 +49,15 @@ class PromiseWrapper extends React.PureComponent {
     return Promise.resolve(promises(props, ...args))
       .then((data) => {
         const response = complete ? complete(data) : data;
-        this.setState({ loading: false, data: response, error: null });
+        if (this.isMount) {
+          this.setState({ loading: false, data: response, error: null });
+        }
         return response;
       })
       .catch((error) => {
-        this.setState({ loading: false, error });
+        if (this.isMount) {
+          this.setState({ loading: false, error });
+        }
         return Promise.reject(error);
       });
   };

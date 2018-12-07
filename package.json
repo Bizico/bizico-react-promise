@@ -1,6 +1,6 @@
 {
   "name": "@bizico/react-promise",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Wrap your component to work with side effects easier",
   "author": "Vitalii Baitaliuk <vbait@bizico.com>",
   "license": "MIT",
@@ -17,9 +17,7 @@
     "test:watch": "react-scripts test --env=jsdom",
     "build": "rollup -c",
     "start": "rollup -c -w",
-    "prepare": "yarn run build",
-    "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build"
+    "deploy": "cd example && yarn build:pages"
   },
   "peerDependencies": {
     "prop-types": "^15.5.4",
