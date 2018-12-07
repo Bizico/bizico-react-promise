@@ -8,12 +8,15 @@ export const PromisePropTypes = PropTypes.shape({
     PropTypes.object,
     PropTypes.instanceOf(Error),
   ]),
+  refetch: PropTypes.func.isRequired,
 });
 
 export const ConfigPropTypes = {
   name: PropTypes.string,
   defaultData: PropTypes.any,
-  promises: PropTypes.func,
+  promise: PropTypes.func.isRequired,
+  skip: PropTypes.func,
+  variables: PropTypes.func,
   loading: PropTypes.func,
   error: PropTypes.func,
   complete: PropTypes.func,

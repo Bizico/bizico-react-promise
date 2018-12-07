@@ -8,6 +8,7 @@ import { Layout, Menu } from 'antd';
 import MenuItem from './components/MenuItem';
 import Readme from './Readme';
 import Simple from './Simple';
+import './App.css';
 
 
 const { Content, Footer, Sider } = Layout;
@@ -28,7 +29,7 @@ export default class App extends Component {
               <MenuItem key="2" path="/simple" label="Simple" exact />
             </Menu>
           </Sider>
-          <Layout style={{ height: '100vh' }}>
+          <Layout style={{ minHeight: '100vh' }}>
             <Content style={{ margin: '24px 16px 0' }}>
               <Switch>
                 <Route exact path="/" component={Readme} />

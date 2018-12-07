@@ -6,7 +6,7 @@ import shallowDiffers from './shallow-differs';
 class PromiseWrapper extends React.PureComponent {
   constructor(props) {
     super(props);
-    const { skip = () => false, defaultData = null } = props;
+    const { skip, defaultData = null } = props;
     this.skip = skip(props);
     this.state = { loading: !this.skip, error: null, data: defaultData };
     this.loaded = false;
@@ -22,7 +22,7 @@ class PromiseWrapper extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { skip = () => false, variables } = this.props;
+    const { skip, variables } = this.props;
     if (!this.loaded && !skip(this.props)) {
       this.skip = false;
       this.loaded = true;
@@ -41,14 +41,14 @@ class PromiseWrapper extends React.PureComponent {
   }
 
   query = (...args) => {
-    const { promises = () => null, complete, variables } = this.props;
+    const { promise, complete, variables } = this.props;
     let { props } = this;
     if (variables) {
       props = variables(this.props);
     }
-    return Promise.resolve(promises(props, ...args))
+    return Promise.resolve(promise(props, ...args))
       .then((data) => {
-        const response = complete ? complete(data) : data;
+        const response = complete(data);
         if (this.isMount) {
           this.setState({ loading: false, data: response, error: null });
         }
@@ -74,10 +74,10 @@ class PromiseWrapper extends React.PureComponent {
   render() {
     const { loading: promiseLoading, error: promiseError } = this.state;
     const {
-      name = PROMISE_NAME,
+      name,
       defaultData,
       skip,
-      promises,
+      promise,
       loading,
       error,
       complete,
@@ -104,8 +104,16 @@ class PromiseWrapper extends React.PureComponent {
   }
 }
 
-PromiseWrapper.propTypes = {
-  ...ConfigPropTypes,
+PromiseWrapper.propTypes = ConfigPropTypes;
+
+PromiseWrapper.defaultProps = {
+  skip: () => false,
+  complete: (data) => data,
+  name: PROMISE_NAME,
+  defaultData: null,
+  variables: null,
+  loading: null,
+  error: null,
 };
 
 const createPromise = (defaultConfig = {}) => {
