@@ -11,11 +11,12 @@ import Simple from './Simple';
 
 
 const { Content, Footer, Sider } = Layout;
+const basename = process.env.NODE_ENV === 'production' ? '/bizico-react-promise/' : '/';
 
 export default class App extends Component {
   render() {
     return (
-      <BrowserRouter basename="/">
+      <BrowserRouter basename={basename}>
         <Layout>
           <Sider
             breakpoint="lg"
