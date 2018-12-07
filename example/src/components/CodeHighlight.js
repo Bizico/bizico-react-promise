@@ -7,7 +7,7 @@ import CodeExpandButton from './CodeExpandButton';
 class CodeHighlight extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { expand: true };
+    this.state = { expand: false };
   }
 
   toggleCode = () => {

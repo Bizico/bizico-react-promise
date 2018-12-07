@@ -4,7 +4,7 @@ import { query, PromisePropTypes } from 'bizico-react-promise';
 import Loader from '../components/Loader';
 
 
-const promises = () => new Promise((resolve) => {
+const promise = () => new Promise((resolve) => {
   setTimeout(() => resolve('Loaded Data'), 1000);
 });
 
@@ -22,7 +22,7 @@ Component.propTypes = {
 export default query({
   name: 'data',
   defaultData: 'Loading ...',
-  promises,
+  promise,
   loading: (props) => <Loader {...props} />,
   error: () => <Alert message="ERROR" type="error" />,
 })(Component);
