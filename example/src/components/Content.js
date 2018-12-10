@@ -1,8 +1,8 @@
 import React from 'react';
 
 
-const Content = ({ children }) => (
-  <div style={{ padding: 24, background: '#fff' }}>
+const Content = ({ children, ...other }) => (
+  <div style={{ padding: 24, background: '#fff' }} {...other}>
     {children}
   </div>
 );

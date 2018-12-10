@@ -1,17 +1,13 @@
 import React, { Fragment } from 'react';
-import Content from '../components/Content';
-import Renderer from './Renderer';
-import HOC from './HOC';
+import PlayGround from '../components/PlayGround';
+import renderer from './Renderer.example';
+import hoc from './HOC.example';
 
 
-export default (props) => (
+export default () => (
   <Fragment>
-    <Content>
-      <Renderer {...props} />
-    </Content>
+    <PlayGround title="Query component" code={renderer} />
     <br />
-    <Content>
-      <HOC {...props} />
-    </Content>
+    <PlayGround title="HOC component" code={hoc} />
   </Fragment>
 );

@@ -19,5 +19,5 @@ const Example = () => (
     )}
   </Query>
 );
-ReactDOM.render(<Example />, document.getElementById("example"));
+ReactDOM.render(<Example />, mountNode);
 `;

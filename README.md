@@ -10,7 +10,7 @@
 npm install --save @bizico/react-promise
 ```
 
-## Usage
+## Usage Query (query hoc)
 
 ```jsx
 import React from 'react';
