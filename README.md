@@ -10,6 +10,8 @@
 npm install --save @bizico/react-promise
 ```
 
+## [Demo](https://bizico.github.io/bizico-react-promise)
+
 ## Usage Query (query hoc)
 
 ```jsx
@@ -89,6 +91,103 @@ const Component = query({
 |-----------|------------------------------------------|------------|
 | refetch | Refetch promise with extra args | (props, ...args): Promise |
 | data | Response data | any |
+| loading | Promise state | Boolean |
+| error | if promise is rejected  | Error |
+
+
+## Usage Manipulation (manipulation hoc)
+
+```jsx
+import React from 'react';
+import { Manipulation } from '@bizico/react-promise';
+import Button from '../components/Button';
+import Loader from '../components/Loader';
+import Error from '../components/Error';
+
+const promises = {
+  updateFirst: (props, ...args) => (
+    new Promise((resolve) => {
+      setTimeout(() => resolve('Loaded: First Data'), 1000);
+    })
+  ),
+  updateSecond: (props, ...args) => (
+    new Promise((resolve) => {
+      setTimeout(() => resolve('Loaded: Second Data'), 1000);
+    })
+  ),
+};
+
+const Example = () => (
+  <Manipulation
+    name="manipulation"
+    promises={promises}
+    loading={(props) => <Loader {...props} />}
+    error={(props) => <Error {...props} />},
+  >
+    {({ manipulation: { updateFirst, updateSecond } }) => (
+      <div>
+        {updateFirst.data && <div>{updateFirst.data}</div>}
+        {updateSecond.data && <div>{updateSecond.data}</div>}
+        <Button onClick={() => updateFirst.manipulate('First action')}>Update First</Button>
+        <Button onClick={() => updateSecond.manipulate('Second action')}>Update Second</Button>
+      </div>
+    )}
+  </Manipulation>
+);
+```
+
+```jsx
+import React from 'react';
+import { manipulation, manipulationPropTypes } from '@bizico/react-promise';
+import Button from '../components/Button';
+import Loader from '../components/Loader';
+import Error from '../components/Error';
+
+const promises = {
+  updateFirst: () => (
+    new Promise((resolve) => {
+      setTimeout(() => resolve('Loaded: First Data'), 1000);
+    })
+  ),
+  updateSecond: () => (
+    new Promise((resolve) => {
+      setTimeout(() => resolve('Loaded: Second Data'), 1000);
+    })
+  ),
+};
+
+const Example = ({ manipulation: { updateFirst, updateSecond } }) => (
+  <div>
+    {updateFirst.data && <div>{updateFirst.data}</div>}
+    {updateSecond.data && <div>{updateSecond.data}</div>}
+    <Button onClick={() => updateFirst.manipulate('First action')}>Update First</Button>
+    <Button onClick={() => updateSecond.manipulate('Second action')}>Update Second</Button>
+  </div>
+);
+
+Example.propTypes = {
+  manipulation: manipulationPropTypes('updateFirst', 'updateSecond').isRequired,
+};
+
+const Wrapper = manipulation({
+  name: 'manipulation',
+  promises,
+  loading: (props) => <Loader {...props} />,
+  error:(props) => <Error {...props} />,
+})(Example);
+```
+
+#### Props
+| Name    | Description                              | Type       | Default |
+|-----------|------------------------------------------|------------|---------|
+| promises | Get promises to load/manipulate data | (props, ...args): Object | - |
+| loading | Loader component when Promise is pending | (props): Component | null |
+| error | Error component when Promise is rejected | (props): Component | null |
+| name | Prop Name | String | manipulation |
+
+#### manipulationPropTypes(...)
+| Name    | Description                              | Type       |
+|-----------|------------------------------------------|------------|
 | loading | Promise state | Boolean |
 | error | if promise is rejected  | Error |
 

@@ -1,6 +1,6 @@
 {
   "name": "@bizico/react-promise",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Wrap your component to work with side effects easier",
   "author": "Vitalii Baitaliuk <vbait@bizico.com>",
   "license": "MIT",

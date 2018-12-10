@@ -4,4 +4,5 @@ export {
   Manipulation,
   createManipulationPromise,
 } from './manipulation';
-export { PromisePropTypes, ManipulationPropTypes } from './prop-types';
+export { PromisePropTypes, ManipulationPropTypes, manipulationPropTypes } from './prop-types';
+export { default as compose } from './compose';

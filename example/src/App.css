@@ -1,34 +1,16 @@
-.code-box {
-  position: relative;
-}
-
-.code-box.code-box-show {
-  margin-top: 14px;
-  border-top: 1px dashed #ebedf0;
-}
-
-.code-box .code-expand-icon {
-  position: absolute;
-  cursor: pointer;
-  width: 16px;
-  height: 16px;
-  line-height: 16px;
+.logo {
   text-align: center;
-  top: -16px;
-  right: 0;
 }
 
-.code-box .code-expand-icon img {
-  max-width: 100%;
-  width: 100%;
+.logo a {
+  color: #fff;
+  display: inline-block;
+  padding: 5px;
 }
 
-.code-box.code-box-show .code-expand-icon {
-  top: -30px;
-}
-
-.code-box pre {
-  background: inherit !important;
+.logo a svg {
+  display: block;
+  fill: currentColor;
 }
 
 .play-ground .code-expand-icon {

@@ -6,12 +6,13 @@ import Content from './Content';
 
 const React = require('react');
 const ReactDOM = require('react-dom');
+const PropTypes = require('prop-types');
 const Antd = require('antd');
 const BizicoReactPromise = require('bizico-react-promise');
 const Loader = require('./Loader').default;
 
-const { Alert, Button, Row, Col } = Antd;
-const { query, Query } = BizicoReactPromise;
+const { Alert, Button, Row, Col, Input, List } = Antd;
+const { query, Query, manipulation, Manipulation, manipulationPropTypes, compose } = BizicoReactPromise;
 
 
 export default class extends React.Component {

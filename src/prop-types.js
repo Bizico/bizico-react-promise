@@ -31,6 +31,25 @@ export const ManipulationPropTypes = PropTypes.shape({
   ]),
 });
 
+export const manipulationPropTypes = (...args) => {
+  const baseConfig = {
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object,
+      PropTypes.instanceOf(Error),
+    ]),
+  };
+  const shape = { ...baseConfig };
+  args.forEach((name) => {
+    shape[name] = PropTypes.shape({
+      ...baseConfig,
+      manipulate: PropTypes.func.isRequired,
+    });
+  });
+  return PropTypes.shape(shape);
+};
+
 export const ConfigManipulationPropTypes = {
   name: PropTypes.string,
   promises: PropTypes.object,
