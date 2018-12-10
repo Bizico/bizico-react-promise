@@ -12,12 +12,11 @@ import './App.css';
 
 
 const { Content, Footer, Sider } = Layout;
-const basename = process.env.NODE_ENV === 'production' ? '/bizico-react-promise/' : '/';
 
 export default class App extends Component {
   render() {
     return (
-      <HashRouter basename={basename}>
+      <HashRouter basename="/">
         <Layout>
           <Sider
             breakpoint="lg"
