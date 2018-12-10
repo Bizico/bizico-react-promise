@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-
-// import ExampleComponent from 'bizico-react-promise';
-import 'antd/dist/antd.css';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
+import 'antd/dist/antd.css';
 
 import MenuItem from './components/MenuItem';
 import Readme from './Readme';
