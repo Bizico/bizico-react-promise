@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 // import ExampleComponent from 'bizico-react-promise';
 import 'antd/dist/antd.css';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 
 import MenuItem from './components/MenuItem';
@@ -17,7 +17,7 @@ const basename = process.env.NODE_ENV === 'production' ? '/bizico-react-promise/
 export default class App extends Component {
   render() {
     return (
-      <BrowserRouter basename={basename}>
+      <HashRouter basename={basename}>
         <Layout>
           <Sider
             breakpoint="lg"
@@ -41,7 +41,7 @@ export default class App extends Component {
             </Footer>
           </Layout>
         </Layout>
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 }
