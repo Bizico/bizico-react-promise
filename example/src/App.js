@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { HashRouter, Switch, Route } from 'react-router-dom';
+import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import 'antd/dist/antd.css';
 
 import MenuItem from './components/MenuItem';
-import Readme from './Readme';
+// import Readme from './Readme';
 import BaseQueryExample from './BaseQueryExample';
 import BaseManipulationExample from './BaseManipulationExample';
 import ManipulationLoadersExample from './ManipulationLoadersExample';
@@ -31,7 +31,7 @@ export default class App extends Component {
               </a>
             </div>
             <Menu theme="dark" mode="inline">
-              <MenuItem key="1" path="/" label="README" exact />
+              {/* <MenuItem key="1" path="/" label="README" exact /> */}
               <MenuItem key="2" path="/base-query" label="Base Query" exact />
               <MenuItem key="3" path="/base-manipulation" label="Base Manipulation" exact />
               <MenuItem key="4" path="/manipulation-loaders" label="Manipulation Loaders" exact />
@@ -41,11 +41,12 @@ export default class App extends Component {
           <Layout style={{ minHeight: '100vh' }}>
             <Content style={{ margin: '24px 16px 0' }}>
               <Switch>
-                <Route exact path="/" component={Readme} />
+                {/* <Route exact path="/" component={Readme} /> */}
                 <Route exact path="/base-query" component={BaseQueryExample} />
                 <Route exact path="/base-manipulation" component={BaseManipulationExample} />
                 <Route exact path="/manipulation-loaders" component={ManipulationLoadersExample} />
                 <Route exact path="/list" component={ListExample} />
+                <Redirect to="/base-query" />
               </Switch>
             </Content>
             <Footer style={{ textAlign: 'center' }}>
