@@ -1,5 +1,6 @@
 import React from 'react';
 import { ConfigManipulationPropTypes } from './prop-types';
+import PromiseSwitch from './PromiseSwitch';
 import { MANIPULATION_NAME } from './constants';
 
 class ManipulationWrapper extends React.PureComponent {
@@ -8,6 +9,7 @@ class ManipulationWrapper extends React.PureComponent {
     const { promises = {} } = props;
     this.isMount = false;
     this.state = {};
+    this.switchers = {};
     Object.keys(promises).forEach((promiseName) => {
       const promise = promises[promiseName];
       this.state[promiseName] = {
@@ -16,6 +18,7 @@ class ManipulationWrapper extends React.PureComponent {
         data: null,
         manipulate: this.manipulate(promiseName, promise),
       };
+      this.switchers[promiseName] = new PromiseSwitch();
     });
   }
 
@@ -28,9 +31,12 @@ class ManipulationWrapper extends React.PureComponent {
   }
 
   manipulate = (name, promise) => (...args) => {
+    const switcher = this.switchers[name];
     const { [name]: item } = this.state;
-    this.setState({ [name]: { ...item, loading: true } });
-    return Promise.resolve(promise(this.props, ...args))
+    if (!item.loading) {
+      this.setState({ [name]: { ...item, loading: true } });
+    }
+    return switcher.call(Promise.resolve(promise(this.props, ...args)))
       .then((data) => {
         if (this.isMount) {
           this.setState({
@@ -43,7 +49,7 @@ class ManipulationWrapper extends React.PureComponent {
         if (this.isMount) {
           this.setState({ [name]: { ...item, loading: false, error } });
         }
-        return Promise.reject(error);
+        throw error;
       });
   };
 

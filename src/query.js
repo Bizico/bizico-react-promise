@@ -1,7 +1,8 @@
 import React from 'react';
-import { ERROR_REFETCH_MESSAGE, PROMISE_NAME } from './constants';
+import { PROMISE_NAME } from './constants';
 import { ConfigPropTypes } from './prop-types';
 import shallowDiffers from './shallow-differs';
+import PromiseSwitch from './PromiseSwitch';
 
 class PromiseWrapper extends React.PureComponent {
   constructor(props) {
@@ -11,6 +12,7 @@ class PromiseWrapper extends React.PureComponent {
     this.state = { loading: !this.skip, error: null, data: defaultData };
     this.loaded = false;
     this.isMount = false;
+    this.promiseSwitch = new PromiseSwitch();
   }
 
   componentDidMount() {
@@ -46,7 +48,8 @@ class PromiseWrapper extends React.PureComponent {
     if (variables) {
       props = variables(this.props);
     }
-    return Promise.resolve(promise(props, ...args))
+
+    this.promiseSwitch.call(Promise.resolve(promise(props, ...args)))
       .then((data) => {
         const response = complete(data);
         if (this.isMount) {
@@ -58,7 +61,7 @@ class PromiseWrapper extends React.PureComponent {
         if (this.isMount) {
           this.setState({ loading: false, error });
         }
-        return Promise.reject(error);
+        throw error;
       });
   };
 
@@ -66,9 +69,8 @@ class PromiseWrapper extends React.PureComponent {
     const { loading } = this.state;
     if (!loading) {
       this.setState({ loading: true });
-      return this.query(...args);
     }
-    return Promise.reject(ERROR_REFETCH_MESSAGE);
+    return this.query(...args);
   };
 
   render() {
