@@ -9,6 +9,7 @@
     "babel-preset-react-app": "^6.1.0",
     "bizico-react-promise": "link:..",
     "lodash.debounce": "^4.0.8",
+    "mdn-polyfills": "^5.15.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-codemirror": "^1.0.0",
