@@ -16,7 +16,7 @@ export const ConfigPropTypes = {
   defaultData: PropTypes.any,
   promise: PropTypes.func.isRequired,
   skip: PropTypes.func,
-  variables: PropTypes.func,
+  variables: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   loading: PropTypes.func,
   error: PropTypes.func,
   complete: PropTypes.func,

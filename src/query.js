@@ -1,8 +1,49 @@
-import React from 'react';
-import { PROMISE_NAME } from './constants';
-import { ConfigPropTypes } from './prop-types';
-import shallowDiffers from './shallow-differs';
-import PromiseSwitch from './PromiseSwitch';
+import React from "react";
+import { PROMISE_NAME } from "./constants";
+import { ConfigPropTypes } from "./prop-types";
+import shallowDiffers from "./shallow-differs";
+import PromiseSwitch from "./PromiseSwitch";
+
+
+const isFunction = (fn) => (
+  fn && {}.toString.call(fn) === '[object Function]'
+)
+
+const isObject = (ob) => (
+  ob && {}.toString.call(ob) === '[object Object]'
+)
+
+const reservedProps = [
+  "name",
+  "defaultData",
+  "skip",
+  "promise",
+  "loading",
+  "error",
+  "complete",
+  "variables",
+  "children"
+];
+
+const excludeReservedProps = props => {
+  const newProps = {};
+  for (const prop in props) {
+    if (!reservedProps.includes(prop)) {
+      newProps[prop] = props[prop];
+    }
+  }
+  return newProps;
+};
+
+const getVariables = ({ variables, ...props }) => {
+  let newProps = null;
+  if (isFunction(variables)) {
+    newProps = variables(excludeReservedProps(props));
+  } else if (isObject(variables)) {
+    newProps = variables;
+  }
+  return newProps;
+};
 
 class PromiseWrapper extends React.PureComponent {
   constructor(props) {
@@ -24,15 +65,14 @@ class PromiseWrapper extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { skip, variables } = this.props;
+    const { skip } = this.props;
     if (!this.loaded && !skip(this.props)) {
       this.skip = false;
       this.loaded = true;
       this.refetch();
     } else if (
-      !this.skip
-      && variables
-      && shallowDiffers(variables(prevProps), variables(this.props))
+      !this.skip &&
+      shallowDiffers(getVariables(prevProps), getVariables(this.props))
     ) {
       this.refetch();
     }
@@ -43,21 +83,19 @@ class PromiseWrapper extends React.PureComponent {
   }
 
   query = (...args) => {
-    const { promise, complete, variables } = this.props;
-    let { props } = this;
-    if (variables) {
-      props = variables(this.props);
-    }
+    const { promise, complete } = this.props;
+    const props = { ...this.props, ...getVariables(this.props) };
 
-    this.promiseSwitch.call(Promise.resolve(promise(props, ...args)))
-      .then((data) => {
+    this.promiseSwitch
+      .call(Promise.resolve(promise(props, ...args)))
+      .then(data => {
         const response = complete(data);
         if (this.isMount) {
           this.setState({ loading: false, data: response, error: null });
         }
         return response;
       })
-      .catch((error) => {
+      .catch(error => {
         if (this.isMount) {
           this.setState({ loading: false, error });
         }
@@ -77,19 +115,14 @@ class PromiseWrapper extends React.PureComponent {
     const { loading: promiseLoading, error: promiseError } = this.state;
     const {
       name,
-      defaultData,
-      skip,
-      promise,
       loading,
       error,
-      complete,
       children,
-      ...other
     } = this.props;
 
     const props = {
       [name]: { ...this.state, refetch: this.refetch },
-      ...other,
+      ...getVariables(this.props)
     };
 
     if (promiseLoading && loading) {
@@ -110,25 +143,23 @@ PromiseWrapper.propTypes = ConfigPropTypes;
 
 PromiseWrapper.defaultProps = {
   skip: () => false,
-  complete: (data) => data,
+  complete: data => data,
   name: PROMISE_NAME,
   defaultData: null,
   variables: null,
   loading: null,
-  error: null,
+  error: null
 };
 
 const createPromise = (defaultConfig = {}) => {
-  const component = (config) => (
-    <PromiseWrapper {...defaultConfig} {...config} />
-  );
-  const hoc = (config = {}) => (Component) => {
-    const comp = (props) => (
+  const component = config => <PromiseWrapper {...defaultConfig} {...config} />;
+  const hoc = (config = {}) => Component => {
+    const comp = props => (
       <PromiseWrapper {...props} {...defaultConfig} {...config}>
-        {(cProps) => <Component {...cProps} />}
+        {cProps => <Component {...cProps} />}
       </PromiseWrapper>
     );
-    comp.displayName = 'hoc(PromiseWrapper)';
+    comp.displayName = "hoc(PromiseWrapper)";
     return comp;
   };
   return { hoc, component };

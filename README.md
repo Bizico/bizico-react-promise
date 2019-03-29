@@ -77,12 +77,12 @@ const Component = query({
 #### Props
 | Name    | Description                              | Type       | Default |
 |-----------|------------------------------------------|------------|---------|
-| promise | Get promise to load data | (props, ...args): Promise | - |
+| promise | Get promise to load data | ({...props, ...variables}, ...args): Promise | - |
 | skip | If true then promise will not be called immediately | (props): Boolean | props => false |
 | complete | Map data if Promise is fulfilled | (data): any | data => data |
-| loading | Loader component when Promise is pending | (props): Component | null |
-| error | Error component when Promise is rejected | (props): Component | null |
-| variables | Refetch promise if variables are changed (shallow compare) | (props): Object | null |
+| loading | Loader component when Promise is pending | ({...props, ...variables}): Component | null |
+| error | Error component when Promise is rejected | ({...props, ...variables}): Component | null |
+| variables | Refetch promise if variables are changed (shallow compare) | (props): Object or Object | null |
 | name | Prop Name | String | data |
 | defaultData | Default data if promise is not loaded | any | null |
 

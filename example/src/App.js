@@ -9,6 +9,7 @@ import BaseQueryExample from './BaseQueryExample';
 import BaseManipulationExample from './BaseManipulationExample';
 import ManipulationLoadersExample from './ManipulationLoadersExample';
 import ListExample from './ListExample';
+import Example from './Example';
 import './App.css';
 
 
@@ -46,6 +47,7 @@ export default class App extends Component {
                 <Route exact path="/base-manipulation" component={BaseManipulationExample} />
                 <Route exact path="/manipulation-loaders" component={ManipulationLoadersExample} />
                 <Route exact path="/list" component={ListExample} />
+                <Route exact path="/example" component={Example} />
                 <Redirect to="/base-query" />
               </Switch>
             </Content>
