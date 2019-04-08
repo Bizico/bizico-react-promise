@@ -41,6 +41,8 @@ const getVariables = ({ variables, ...props }) => {
     newProps = variables(excludeReservedProps(props));
   } else if (isObject(variables)) {
     newProps = variables;
+  } else {
+    newProps = excludeReservedProps(props);
   }
   return newProps;
 };
