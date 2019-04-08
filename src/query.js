@@ -41,8 +41,6 @@ const getVariables = ({ variables, ...props }) => {
     newProps = variables(excludeReservedProps(props));
   } else if (isObject(variables)) {
     newProps = variables;
-  } else {
-    newProps = excludeReservedProps(props);
   }
   return newProps;
 };
@@ -67,13 +65,14 @@ class PromiseWrapper extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { skip } = this.props;
+    const { skip, variables } = this.props;
     if (!this.loaded && !skip(this.props)) {
       this.skip = false;
       this.loaded = true;
       this.refetch();
     } else if (
       !this.skip &&
+      variables &&
       shallowDiffers(getVariables(prevProps), getVariables(this.props))
     ) {
       this.refetch();
@@ -86,7 +85,7 @@ class PromiseWrapper extends React.PureComponent {
 
   query = (...args) => {
     const { promise, complete } = this.props;
-    const props = { ...this.props, ...getVariables(this.props) };
+    const props = { ...excludeReservedProps(this.props), ...getVariables(this.props) };
 
     this.promiseSwitch
       .call(Promise.resolve(promise(props, ...args)))
@@ -123,8 +122,9 @@ class PromiseWrapper extends React.PureComponent {
     } = this.props;
 
     const props = {
-      [name]: { ...this.state, refetch: this.refetch },
-      ...getVariables(this.props)
+      ...excludeReservedProps(this.props),
+      ...getVariables(this.props),
+      [name]: { ...this.state, refetch: this.refetch }
     };
 
     if (promiseLoading && loading) {
