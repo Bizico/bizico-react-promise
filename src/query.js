@@ -100,7 +100,6 @@ class PromiseWrapper extends React.PureComponent {
         if (this.isMount) {
           this.setState({ loading: false, error });
         }
-        throw error;
       });
   };
 
