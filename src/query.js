@@ -45,12 +45,19 @@ const getVariables = ({ variables, ...props }) => {
   return newProps;
 };
 
+const getDefaultData = ({ defaultData, ...props }) => {
+  if (isFunction(defaultData)) {
+    return defaultData(excludeReservedProps(props));
+  }
+  return defaultData || null;
+};
+
 class PromiseWrapper extends React.PureComponent {
   constructor(props) {
     super(props);
-    const { skip, defaultData = null } = props;
+    const { skip } = props;
     this.skip = skip(props);
-    this.state = { loading: !this.skip, error: null, data: defaultData };
+    this.state = { loading: !this.skip, error: null, data: getDefaultData(props) };
     this.loaded = false;
     this.isMount = false;
     this.promiseSwitch = new PromiseSwitch();

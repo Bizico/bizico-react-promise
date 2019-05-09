@@ -84,7 +84,7 @@ const Component = query({
 | error | Error component when Promise is rejected | ({...props, ...variables}): Component | null |
 | variables | Refetch promise if variables are changed (shallow compare) | (props): Object or Object | null |
 | name | Prop Name | String | data |
-| defaultData | Default data if promise is not loaded | any | null |
+| defaultData | Default data if promise is not loaded | (props): any or any | null |
 
 #### PromisePropTypes
 | Name    | Description                              | Type       |
