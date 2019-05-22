@@ -45,7 +45,7 @@ export const manipulationPropTypes = (...args) => {
     shape[name] = PropTypes.shape({
       ...baseConfig,
       manipulate: PropTypes.func.isRequired,
-    });
+    }).isRequired;
   });
   return PropTypes.shape(shape);
 };

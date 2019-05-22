@@ -15,7 +15,7 @@ import './App.css';
 
 const { Content, Footer, Sider } = Layout;
 
-export default class App extends Component {
+class App extends Component {
   render() {
     return (
       <HashRouter basename="/">
@@ -60,3 +60,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default Example;
