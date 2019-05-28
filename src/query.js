@@ -2,55 +2,8 @@ import React from "react";
 import { PROMISE_NAME } from "./constants";
 import { ConfigPropTypes } from "./prop-types";
 import shallowDiffers from "./shallow-differs";
+import { excludeReservedProps, getVariables, getDefaultData } from "./utils";
 import PromiseSwitch from "./PromiseSwitch";
-
-
-const isFunction = (fn) => (
-  fn && {}.toString.call(fn) === '[object Function]'
-)
-
-const isObject = (ob) => (
-  ob && {}.toString.call(ob) === '[object Object]'
-)
-
-const reservedProps = [
-  "name",
-  "defaultData",
-  "skip",
-  "promise",
-  "loading",
-  "error",
-  "complete",
-  "variables",
-  "children"
-];
-
-const excludeReservedProps = props => {
-  const newProps = {};
-  for (const prop in props) {
-    if (!reservedProps.includes(prop)) {
-      newProps[prop] = props[prop];
-    }
-  }
-  return newProps;
-};
-
-const getVariables = ({ variables, ...props }) => {
-  let newProps = null;
-  if (isFunction(variables)) {
-    newProps = variables(excludeReservedProps(props));
-  } else if (isObject(variables)) {
-    newProps = variables;
-  }
-  return newProps;
-};
-
-const getDefaultData = ({ defaultData, ...props }) => {
-  if (isFunction(defaultData)) {
-    return defaultData(excludeReservedProps(props));
-  }
-  return defaultData || null;
-};
 
 class PromiseWrapper extends React.PureComponent {
   constructor(props) {

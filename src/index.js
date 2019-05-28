@@ -6,4 +6,4 @@ export {
 } from './manipulation';
 export { PromisePropTypes, ManipulationPropTypes, manipulationPropTypes } from './prop-types';
 export { default as compose } from './compose';
-export { default as useQuery } from './query-hook';
+export { useQuery, useManipulate, useLoadingForStates } from './hooks';

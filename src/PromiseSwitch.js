@@ -20,6 +20,10 @@ class PromiseSwitch {
       });
     });
   };
+
+  cancel = () => {
+    this.lastPromiseKey = this.generateKey();
+  }
 }
 
 export default PromiseSwitch;

@@ -15,7 +15,7 @@ class CodeHighlight extends React.Component {
     return (
       <CodeMirror
         value={children}
-        onChange={updateCode}
+        onBeforeChange={updateCode}
         options={{
           mode: 'jsx',
           lineNumbers: false,

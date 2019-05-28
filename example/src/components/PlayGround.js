@@ -12,7 +12,8 @@ const BizicoReactPromise = require('bizico-react-promise');
 const Loader = require('./Loader').default;
 
 const { Alert, Button, Row, Col, Input, List } = Antd;
-const { query, Query, manipulation, Manipulation, manipulationPropTypes, compose } = BizicoReactPromise;
+const { query, Query, manipulation, Manipulation, manipulationPropTypes, compose, useQuery, useManipulate, useLoadingForStates } = BizicoReactPromise;
+const { useState, useCallback, useMemo, useEffect } = React;
 
 
 export default class extends React.Component {
@@ -46,7 +47,7 @@ export default class extends React.Component {
     }
   }
 
-  updateCode = (code) => {
+  updateCode = (editor, data, code) => {
     this.setState({ code });
   };
 

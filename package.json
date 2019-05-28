@@ -1,6 +1,6 @@
 {
   "name": "@bizico/react-promise",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "Wrap your component to work with side effects easier",
   "keywords": ["react", "side-effect", "side-effects", "react-hoc", "promise"],
   "author": "Vitalii Baitaliuk <vbait@bizico.com>",
@@ -17,8 +17,7 @@
     "test": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "build": "rollup -c",
-    "start": "rollup -c -w",
-    "deploy": "cd example && yarn build:pages"
+    "start": "rollup -c -w"
   },
   "peerDependencies": {
     "prop-types": "^15.5.4",

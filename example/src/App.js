@@ -9,6 +9,7 @@ import BaseQueryExample from './BaseQueryExample';
 import BaseManipulationExample from './BaseManipulationExample';
 import ManipulationLoadersExample from './ManipulationLoadersExample';
 import ListExample from './ListExample';
+import ListHooksExample from './ListHooksExample';
 import Example from './Example';
 import './App.css';
 
@@ -37,6 +38,7 @@ class App extends Component {
               <MenuItem key="3" path="/base-manipulation" label="Base Manipulation" exact />
               <MenuItem key="4" path="/manipulation-loaders" label="Manipulation Loaders" exact />
               <MenuItem key="5" path="/list" label="List" exact />
+              <MenuItem key="6" path="/list-hooks" label="List (hooks)" exact />
             </Menu>
           </Sider>
           <Layout style={{ minHeight: '100vh' }}>
@@ -47,6 +49,7 @@ class App extends Component {
                 <Route exact path="/base-manipulation" component={BaseManipulationExample} />
                 <Route exact path="/manipulation-loaders" component={ManipulationLoadersExample} />
                 <Route exact path="/list" component={ListExample} />
+                <Route exact path="/list-hooks" component={ListHooksExample} />
                 <Route exact path="/example" component={Example} />
                 <Redirect to="/base-query" />
               </Switch>
@@ -61,4 +64,4 @@ class App extends Component {
   }
 }
 
-export default Example;
+export default App;
