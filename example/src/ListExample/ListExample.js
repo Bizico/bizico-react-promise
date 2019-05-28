@@ -4,5 +4,5 @@ import example from './example';
 
 
 export default () => (
-  <PlayGround title="Query component" code={example} />
+  <PlayGround title="List Example" code={example} />
 );

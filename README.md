@@ -12,6 +12,131 @@ npm install --save @bizico/react-promise
 
 ## [Demo](https://bizico.github.io/bizico-react-promise)
 
+## Usage React hooks
+
+```javascript
+// Change global config for useQuery
+useQuery.updateConfig(config)
+
+// Get global config
+useQuery.config
+```
+
+```javascript
+useQuery(promise, config) -> [state, action]
+```
+**possible configuration**
+
+* `skip`: true/false, default false - *if you want to skip firs query*
+* `variables`: any, default null - *if you want to call refetch when som data is changed*
+* `defaultData`: any, default null - *data for initial state*
+
+```javascript
+useManipulate(promise) -> [state, action]
+```
+
+```javascript
+// Check if there are loading in some states
+useLoadingForStates(state1, state2, ...) -> true/false
+```
+
+**state**
+
+* `loading`: true/false, default false
+* `data`: any, default == defaultData from configuration
+* `error`: error, default null
+
+**action** - special function to call your promise and update the `state`
+
+### Example
+
+```jsx
+import React, { useState, useCallback } from 'react';
+import { List, Input, Button } from 'antd';
+import { useQuery, useManipulate, useLoadingForStates } from 'bizico-react-promise';
+
+const ListData = {
+  data: [
+    { id: 1, label: 'Item 1' },
+    { id: 2, label: 'Item 2' },
+    { id: 3, label: 'Item 3' },
+  ],
+  load: function() {
+    return Promise.resolve([...this.data]);
+  },
+  add: function (label) {
+    const id = Math.floor((Math.random() * 1000) + 1)
+    this.data.push({ label, id });
+    return Promise.resolve(id);
+  },
+  remove: function (id) {
+    this.data = this.data.filter((item) => item.id !== id);
+    return Promise.resolve(id);
+  },
+};
+
+const ListExample = () => {
+  const [state, refetch] = useQuery(
+    () => ListData.load(),
+    { defaultData: [] },
+  );
+  const [addState, add] = useManipulate(
+    (d) => ListData.add(d),
+  );
+  const [removeState, remove] = useManipulate(
+    (id) => ListData.remove(id),
+  );
+  const loading = useLoadingForStates(state, addState, removeState);
+
+  const [value, setValue] = useState('');
+  
+  const handleChange = useCallback((e) => {
+    setValue(e.target.value);
+  }, [setValue]);
+
+  const handleAdd = useCallback((label) => {
+    if (label) {
+      add(label)
+        .then(() => refetch())
+        .then(() => setValue(''));
+    }
+  }, [add, refetch, setValue]);
+
+  const handleRemove = useCallback((id) => {
+    remove(id).then(() => refetch());
+  }, [remove, refetch]);
+
+  return (
+    <React.Fragment>
+      <List loading={loading}>
+        {state.data.map((item) => (
+          <List.Item
+            key={item.id}
+            actions={[
+              <a href="/" onClick={(e) => { e.preventDefault(); handleRemove(item.id); }}>delete</a>,
+            ]}
+          >
+            {item.label}
+          </List.Item>
+        ))}
+      </List>
+      {!loading && (
+        <React.Fragment>
+          <br />
+          <Input
+            value={value}
+            onChange={handleChange}
+            placeholder="new item label"
+          />
+          <Button onClick={() => handleAdd(value)}>Add</Button>
+          <Button onClick={refetch}>Refetch</Button>
+        </React.Fragment>
+      )}
+    </React.Fragment>
+  )
+};
+```
+
 ## Usage Query (query hoc)
 
 ```jsx

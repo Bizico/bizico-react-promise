@@ -1,54 +1,96 @@
-import React from "react";
-import { Query } from "bizico-react-promise";
+import React, { useState, useCallback } from "react";
+import { List, Input, Button } from 'antd';
+import { useQuery, useManipulate, useLoadingForStates } from "bizico-react-promise";
 
-const getData = (props) => {
-  return new Promise(resolve => {
-    setTimeout(() => resolve("getData: DATA"), 1000);
-  });
+const ListData = {
+  data: [
+    { id: 1, label: 'Item 1' },
+    { id: 2, label: 'Item 2' },
+    { id: 3, label: 'Item 3' },
+  ],
+  load: function() {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve([...this.data]), 1000);
+    });
+  },
+  add: function (label) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const id = Math.floor((Math.random() * 1000) + 1)
+        this.data.push({ label, id });
+        resolve(id);
+      }, 1000);
+    });
+  },
+  remove: function (id) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.data = this.data.filter((item) => item.id !== id);
+        resolve(id);
+      }, 1000);
+    });
+  },
 };
 
-const getUser = () => {
-  return new Promise(resolve => {
-    setTimeout(() => resolve("getUser: DATA"), 1000);
-  });
+const ListExample = () => {
+  const [state, refetch] = useQuery(
+    () => ListData.load(),
+    { defaultData: [] },
+  );
+  const [addState, add] = useManipulate(
+    (d) => ListData.add(d),
+  );
+  const [removeState, remove] = useManipulate(
+    (id) => ListData.remove(id),
+  );
+  const loading = useLoadingForStates(state, addState, removeState);
+
+  const [value, setValue] = useState('');
+  
+  const handleChange = useCallback((e) => {
+    setValue(e.target.value);
+  }, [setValue]);
+
+  const handleAdd = useCallback((label) => {
+    if (label) {
+      add(label)
+        .then(() => refetch())
+        .then(() => setValue(''));
+    }
+  }, [add, refetch, setValue]);
+
+  const handleRemove = useCallback((id) => {
+    remove(id).then(() => refetch());
+  }, [remove, refetch]);
+
+  return (
+    <React.Fragment>
+      <List loading={loading}>
+        {state.data.map((item) => (
+          <List.Item
+            key={item.id}
+            actions={[
+              <a href="/" onClick={(e) => { e.preventDefault(); handleRemove(item.id); }}>delete</a>,
+            ]}
+          >
+            {item.label}
+          </List.Item>
+        ))}
+      </List>
+      {!loading && (
+        <React.Fragment>
+          <br />
+          <Input
+            value={value}
+            onChange={handleChange}
+            placeholder="new item label"
+          />
+          <Button onClick={() => handleAdd(value)}>Add</Button>
+          <Button onClick={refetch}>Refetch</Button>
+        </React.Fragment>
+      )}
+    </React.Fragment>
+  )
 };
 
-class Example extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search: ""
-    };
-  }
-
-  handleChange = e => {
-    this.setState({ search: e.target.value });
-  };
-
-  render() {
-    const { search } = this.state;
-    return (
-      <div>
-        <div>
-          <input value={search} onChange={this.handleChange} />
-        </div>
-        {search ? (
-          <Query key="1" name="data" promise={getData} defaultData={"getData: NO DATA"} search={search} variables={{ search }}>
-            {({ data: { loading, data } }) => {
-              return loading ? 'LOADING' : data;
-            }}
-          </Query>
-        ) : (
-          <Query key="2" name="user" promise={getUser} defaultData={"getUser: NO DATA"}>
-            {({ user: { data } }) => {
-              console.log(1111111);
-              return data;
-            }}
-          </Query>
-        )}
-      </div>
-    );
-  }
-}
-
-export default Example;
+export default ListExample;

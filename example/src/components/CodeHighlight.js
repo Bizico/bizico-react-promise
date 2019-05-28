@@ -1,9 +1,13 @@
 import React from 'react';
-import CodeMirror from 'react-codemirror';
+import {Controlled as CodeMirror} from 'react-codemirror2';
 import 'codemirror/mode/jsx/jsx';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/solarized.css';
-
+// require('codemirror/lib/codemirror.css');
+// require('codemirror/theme/material.css');
+// require('codemirror/theme/neat.css');
+// require('codemirror/mode/xml/xml.js');
+// require('codemirror/mode/javascript/javascript.js');
 
 class CodeHighlight extends React.Component {
   render() {
@@ -11,7 +15,7 @@ class CodeHighlight extends React.Component {
     return (
       <CodeMirror
         value={children}
-        onChange={updateCode}
+        onBeforeChange={updateCode}
         options={{
           mode: 'jsx',
           lineNumbers: false,

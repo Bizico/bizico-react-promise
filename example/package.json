@@ -6,16 +6,19 @@
   "private": true,
   "dependencies": {
     "antd": "^3.11.0",
-    "babel-preset-react-app": "^6.1.0",
+    "babel-preset-react-app": "^9.0.0",
     "bizico-react-promise": "link:..",
+    "browserslist": "^4.6.0",
+    "caniuse-lite": "^1.0.30000971",
+    "codemirror": "^5.47.0",
     "lodash.debounce": "^4.0.8",
     "mdn-polyfills": "^5.15.0",
-    "prop-types": "^15.6.2",
-    "react": "^16.4.1",
-    "react-codemirror": "^1.0.0",
-    "react-dom": "^16.4.1",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "^1.1.4",
+    "prop-types": "^15.7.2",
+    "react": "link:../node_modules/react",
+    "react-codemirror2": "^6.0.0",
+    "react-dom": "link:../node_modules/react-dom",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "link:../node_modules/react-scripts",
     "simple-git": "^1.107.0"
   },
   "scripts": {
@@ -26,11 +29,18 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-0",
     "@babel/preset-react": "^7.0.0",
     "@babel/standalone": "^7.2.0",
-    "chalk": "^2.4.1",
+    "chalk": "2.4.1",
     "fs-extra": "^7.0.1",
     "react-syntax-highlighter": "^10.1.2",
     "simple-git": "^1.107.0"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
