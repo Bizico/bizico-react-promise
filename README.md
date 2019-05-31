@@ -46,7 +46,7 @@ useLoadingForStates(state1, state2, ...) -> true/false
 * `data`: any, default == defaultData from configuration
 * `error`: error, default null
 
-**action** - special function to call your promise and update the `state`
+**action** - special function to call your promise with first argument `variables` (if you use `useQuery`) and update the `state`
 
 ### Example
 

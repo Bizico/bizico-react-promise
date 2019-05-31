@@ -31,7 +31,7 @@ const useLoadingForStates = (...states) => {
   return loading;
 }
 
-const usePromise = (promise, updateState) => {
+const usePromise = (promise, updateState, variables, useVariables = false) => {
   const promiseSwitch = useMemo(() => new PromiseSwitch(), []);
   const action = useCallback((...args) => {
     updateState((prev) => {
@@ -40,14 +40,18 @@ const usePromise = (promise, updateState) => {
       }
       return { ...prev, loading: true };
     });
-    return promiseSwitch.call(promise(...args)).then((response) => {
+    const allArgs = [...args];
+    if (useVariables) {
+      allArgs.unshift(variables);
+    }
+    return promiseSwitch.call(promise(...allArgs)).then((response) => {
       updateState((prev) => ({ ...prev, loading: false, data: response, error: null }));
       return response;
     }).catch((error) => {
       updateState((prev) => ({ ...prev, loading: false, error }));
       throw error;
     });
-  }, [updateState, promiseSwitch]);
+  }, [updateState, promiseSwitch, variables]);
   return [action, promiseSwitch];
 }
 
@@ -84,7 +88,7 @@ const useQuery = (promise, config = {}) => {
     error: null,
     data: mergedConfig.defaultData,
   });
-  const [refetch, subscriber] = usePromise(promise, updateState);
+  const [refetch, subscriber] = usePromise(promise, updateState, config.variables, true);
   useEffect(() => {
     !mergedConfig.skip && refetch();
     return function cleanup() {

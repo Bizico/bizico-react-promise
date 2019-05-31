@@ -54,7 +54,7 @@ const ListExample = () => {
   const handleAdd = useCallback((label) => {
     if (label) {
       add(label)
-        .then(() => refetch())
+        .then(() => refetch(1, 2, 3))
         .then(() => setValue(''));
     }
   }, [add, refetch, setValue]);
