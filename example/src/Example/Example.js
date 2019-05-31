@@ -9,12 +9,13 @@ const ListData = {
     { id: 3, label: 'Item 3' },
   ],
   load: function() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => resolve([...this.data]), 1000);
+      // setTimeout(() => reject(Error('aaaa')), 1000);
     });
   },
   add: function (label) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         const id = Math.floor((Math.random() * 1000) + 1)
         this.data.push({ label, id });
@@ -37,6 +38,7 @@ const ListExample = () => {
     () => ListData.load(),
     { defaultData: [] },
   );
+  
   const [addState, add] = useManipulate(
     (d) => ListData.add(d),
   );
@@ -55,12 +57,13 @@ const ListExample = () => {
     if (label) {
       add(label)
         .then(() => refetch(1, 2, 3))
-        .then(() => setValue(''));
+        .then(() => setValue(''))
+        .catch(() => {});
     }
   }, [add, refetch, setValue]);
 
   const handleRemove = useCallback((id) => {
-    remove(id).then(() => refetch());
+    remove(id).then(() => refetch()).catch(() => {});
   }, [remove, refetch]);
 
   return (

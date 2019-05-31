@@ -4,15 +4,15 @@ self.__precacheManifest = [
     "url": "/bizico-react-promise/static/js/runtime~main.55f6467a.js"
   },
   {
-    "revision": "8af9c91557e4c046cb0f",
-    "url": "/bizico-react-promise/static/js/main.8af9c915.chunk.js"
+    "revision": "69316ae01de84277e546",
+    "url": "/bizico-react-promise/static/js/main.69316ae0.chunk.js"
   },
   {
     "revision": "5581d3e73e36bf997576",
     "url": "/bizico-react-promise/static/js/1.5581d3e7.chunk.js"
   },
   {
-    "revision": "8af9c91557e4c046cb0f",
+    "revision": "69316ae01de84277e546",
     "url": "/bizico-react-promise/static/css/main.ec29e5eb.chunk.css"
   },
   {
@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/bizico-react-promise/static/css/1.4e41453d.chunk.css"
   },
   {
-    "revision": "a43fb327e852b3024dd7a3d217d6f246",
+    "revision": "564fde23ba1aba6cc8eabf70a2985f21",
     "url": "/bizico-react-promise/index.html"
   }
 ];

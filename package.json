@@ -1,6 +1,6 @@
 {
   "name": "@bizico/react-promise",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Wrap your component to work with side effects easier",
   "keywords": ["react", "side-effect", "side-effects", "react-hoc", "promise"],
   "author": "Vitalii Baitaliuk <vbait@bizico.com>",

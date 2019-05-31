@@ -31,7 +31,7 @@ const useLoadingForStates = (...states) => {
   return loading;
 }
 
-const usePromise = (promise, updateState, variables, useVariables = false) => {
+const usePromise = (promise, updateState, variables, forQuery = false) => {
   const promiseSwitch = useMemo(() => new PromiseSwitch(), []);
   const action = useCallback((...args) => {
     updateState((prev) => {
@@ -41,7 +41,7 @@ const usePromise = (promise, updateState, variables, useVariables = false) => {
       return { ...prev, loading: true };
     });
     const allArgs = [...args];
-    if (useVariables) {
+    if (forQuery) {
       allArgs.unshift(variables);
     }
     return promiseSwitch.call(promise(...allArgs)).then((response) => {
@@ -90,7 +90,7 @@ const useQuery = (promise, config = {}) => {
   });
   const [refetch, subscriber] = usePromise(promise, updateState, config.variables, true);
   useEffect(() => {
-    !mergedConfig.skip && refetch();
+    !mergedConfig.skip && refetch().catch((error) => window.console && console.error(error));
     return function cleanup() {
       subscriber.cancel();
     };
