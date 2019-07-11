@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/bizico-react-promise/precache-manifest.bef43ba18978d25d37e86127f9fb9d30.js"
+  "/bizico-react-promise/precache-manifest.e4d9b57597419a570c87084b1376fcd2.js"
 );
 
 workbox.clientsClaim();

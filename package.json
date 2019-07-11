@@ -1,8 +1,14 @@
 {
   "name": "@bizico/react-promise",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Wrap your component to work with side effects easier",
-  "keywords": ["react", "side-effect", "side-effects", "react-hoc", "promise"],
+  "keywords": [
+    "react",
+    "side-effect",
+    "side-effects",
+    "react-hoc",
+    "promise"
+  ],
   "author": "Vitalii Baitaliuk <vbait@bizico.com>",
   "license": "MIT",
   "repository": "Bizico/bizico-react-promise",
@@ -52,7 +58,7 @@
     "rollup-plugin-commonjs": "^9.1.3",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
-    "rollup-plugin-postcss": "^1.6.2",
+    "rollup-plugin-postcss": "^2.0.3",
     "rollup-plugin-url": "^1.4.0"
   },
   "files": [
