@@ -11,6 +11,7 @@
     "browserslist": "^4.6.0",
     "caniuse-lite": "^1.0.30000971",
     "codemirror": "^5.47.0",
+    "eslint-utils": "^1.4.1",
     "lodash.debounce": "^4.0.8",
     "mdn-polyfills": "^5.15.0",
     "prop-types": "^15.7.2",
