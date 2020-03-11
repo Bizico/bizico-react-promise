@@ -32,8 +32,12 @@ useQuery(promise, config) -> [state, action]
 * `defaultData`: any, default null - *data for initial state*
 
 ```javascript
-useManipulate(promise) -> [state, action]
+useManipulate(promise, config) -> [state, action]
 ```
+
+**possible configuration**
+
+* `defaultData`: any, default null - *data for initial state*
 
 ```javascript
 // Check if there are loading in some states
@@ -89,7 +93,7 @@ const ListExample = () => {
   const loading = useLoadingForStates(state, addState, removeState);
 
   const [value, setValue] = useState('');
-  
+
   const handleChange = useCallback((e) => {
     setValue(e.target.value);
   }, [setValue]);
