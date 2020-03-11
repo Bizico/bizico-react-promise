@@ -12,7 +12,7 @@ import PromiseSwitch from "./PromiseSwitch";
 
 /**
  * Manipulate configuration.
- * @typedef {Object} QueryConfig
+ * @typedef {Object} ManipulateConfig
  * @property {*} [defaultData=null] -The start data for the state.
  */
 
@@ -64,6 +64,7 @@ const usePromise = (promise, updateState, variables, forQuery = false) => {
 /**
  * Manipulation hook to update data.
  * @param {Promise} promise - The promise.
+ * @param {ManipulateConfig} [config={}] - The config to initialize the state.
  * @returns {Array} Array with current state and a manipulate function
  */
 const useManipulate = (promise, config = {defaultData: null}) => {
