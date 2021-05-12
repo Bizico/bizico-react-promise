@@ -1150,10 +1150,10 @@ clipboard@^2.0.0:
     select "^1.1.2"
     tiny-emitter "^2.0.0"
 
-codemirror@^5.47.0:
-  version "5.50.2"
-  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.50.2.tgz#32ddfe2b50193fcf573d8141c4a31d267c92b4a3"
-  integrity sha512-PPjUsC1oXSM86lunKrw609P1oM0Wu8z9rqzjbeyBYCcx44VL41aUpccdOf1PfAZtTONlmN3sT3p2etLNYa1OGg==
+codemirror@^5.58.2:
+  version "5.58.2"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.58.2.tgz#ed54a1796de1498688bea1cdd4e9eeb187565d1b"
+  integrity sha512-K/hOh24cCwRutd1Mk3uLtjWzNISOkm4fvXiMO7LucCrqbh6aJDdtqUziim3MZUI6wOY0rvY1SlL1Ork01uMy6w==
 
 color-convert@^1.9.0:
   version "1.9.3"
