@@ -8,7 +8,7 @@
     "antd": "^3.11.0",
     "babel-preset-react-app": "^9.0.0",
     "bizico-react-promise": "link:..",
-    "browserslist": "^4.6.0",
+    "browserslist": "^4.16.5",
     "caniuse-lite": "^1.0.30000971",
     "codemirror": "^5.47.0",
     "eslint-utils": "^1.4.1",
