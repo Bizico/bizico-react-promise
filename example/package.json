@@ -20,7 +20,7 @@
     "react-dom": "link:../node_modules/react-dom",
     "react-router-dom": "^5.0.0",
     "react-scripts": "link:../node_modules/react-scripts",
-    "simple-git": "^1.107.0"
+    "simple-git": "^3.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -36,7 +36,7 @@
     "chalk": "2.4.1",
     "fs-extra": "^7.0.1",
     "react-syntax-highlighter": "^10.1.2",
-    "simple-git": "^1.107.0"
+    "simple-git": "^3.3.0"
   },
   "browserslist": [
     ">0.2%",
